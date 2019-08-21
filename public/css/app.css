@@ -1,0 +1,157 @@
+.clear{
+	clear: both;
+}
+.wrapper{
+	margin: 100px auto;
+}
+.ui-datepicker-calendar {
+    display: none;
+}
+.txt-small{
+	font-size:10px;
+}
+.txt-medium{
+	font-size:12px;
+}
+.btn{
+	margin-bottom:5px !important;
+}
+
+.pointer{
+	cursor: pointer;
+}
+
+/* Estilos de iconos para Documentos */
+.icon-fa, .icon-fa:hover{
+	text-decoration: none;
+	color: #000000;
+}
+
+.fa-file-pdf{
+	color: #f71f22;
+}
+
+.fa-file-excel{
+	color: #207446;
+}
+
+.fa-file-word{
+	color: #285395;
+}
+
+.fa-file-image{
+	color: #5ecde4;
+}
+
+.fa-file-powerpoint{
+	color: #b7472a;
+}
+
+/* Al seleccionar el tipo de usuario empresa */
+#select_empresa_new_user > span{
+	width: 100% !important;
+}
+
+.row{
+	margin: 0px 0px;
+}
+
+.card-info-container{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.card-info{
+	height: 80px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 18px;
+	border-radius: 5px;
+}
+
+.card-info :first-child {
+	margin:0 5px 0 0;
+}
+
+@media (min-width: 750px) and (max-width: 2000px) {
+	.card-info{
+		width: 31%;
+	}
+}
+
+@media (min-width: 0px) and (max-width: 749px) {
+	.card-info{
+		width: 100%;
+		margin: 0 0 1em 0;
+	}
+}
+
+.titl{
+	display: flex;
+}
+
+.reuldo{
+	border-radius: 5px;
+	padding-bottom: 10px;
+}
+.reuldo > .card-body{
+	min-height: 50px;
+
+}
+.reuldo > .card-header{
+	text-align: center;
+	color: white;
+	padding-top: 10px;
+	font-size: 1.5em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.reuldo > .card-body ul{
+
+}
+.reuldo > .card-body ul li{
+	color: white;
+}
+
+
+.mb-0{
+	margin-bottom: 0!important;
+	margin-top: 20px;
+}
+
+
+#porcenrt{
+	text-align: center;
+	color: #999999;
+	margin-bottom: 30px;
+	margin-top: 10px;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	animation-name: slidein;
+	transition: all .5s;
+}
+
+@keyframes slidein {
+	0% {
+		color: #999999;
+	}
+	30%{
+		color: #b9b3ad;
+	}
+
+	60% {
+		color: #999999;
+	}
+}
+
+#download_sftp{
+	margin-top: 15px;
+}
+
+

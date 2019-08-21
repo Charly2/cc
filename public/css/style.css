@@ -1,0 +1,398 @@
+html,body{
+	font-family: 'Roboto', sans-serif;
+	height: 100%;
+}
+
+.ocultar{
+	display: none;
+}
+
+/*List*/
+.title-welcome{
+	font-size: 35px;
+	color: #bb903a;
+	font-weight: bold;
+}
+
+tr.sub-companies:last-child {
+	background-color: red;
+}
+
+.box-search{
+	border-radius: 8px;
+	border: solid 1px  #5e595c;
+	color: #5e595c;
+}
+
+.ico-search{
+	text-align: left;
+    font-size: 20px;
+    color: #5e595c;
+    padding: 5px 0 0 0;
+}
+
+.encabezados-list{
+	background-color:#37aa44;
+	color: #fff;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.comapnies-list tr{
+	border-bottom: 1px solid #575756;
+	border-top: 1px solid #575756;
+	font-size:18px;
+	background-color: #fff;
+	color: #1c6e64;
+}
+
+.comapnies-list td{
+	border: none !important;
+}
+
+.sub-companies{
+	cursor: pointer;
+}
+
+.sub-companies{
+	font-size: 14px !important;
+	background-color: #f0f0f0 !important;
+	color: #1c6e64 !important;
+	border:none !important;
+}
+
+.title-subcompanie{
+	margin: 0 58px;
+}
+
+.arrows-list{
+	cursor: pointer;
+}
+
+#table-list-companies tbody tr:first-child{
+	border-top:0px !important;
+}
+
+#table-list-companies>thead>tr>th{
+	border-bottom: 0px !important;
+}
+
+.table-radius-left{
+	border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.table-radius-right{
+	border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/*Index*/
+.container_head{
+	padding-top: 15px;
+	padding-bottom: 15px;
+	box-shadow:#5e595c 0px 0px 7px 0px;
+}
+
+.title_menu{
+	font-size: 20px;
+	color: #5e595c;
+	font-weight: 500;
+}
+
+.title_date{
+	font-size: 14px;
+	color: #5e595c;
+	width: 50px;
+	font-weight: 500;
+	padding: 3px 0;
+}
+
+.welcome_title{
+	font-size: 24px;
+	color: #b32250;
+}
+
+.welcome_paragrph{
+	color: #878787;
+	font-size: 15px;
+}
+
+.menu_btns{
+	padding-top: 35px;
+	padding-bottom: 14px;
+}
+
+.menu_btns img{
+	cursor: pointer;
+
+}
+
+.box_nom_emp{
+	overflow: hidden;
+	padding: 17px 0px;
+	margin: 0 0 0 30px;	
+}
+
+#maincircle{
+	padding-top: 15px;
+}
+
+.no_padding{
+	padding: 0 !important;
+}
+
+#sensor_expediente {
+	display: block;
+	position: absolute;
+	background-color:transparent;
+	top: 49px;
+	left: 496px;
+	width: 111px;
+	height: 108px;
+	cursor: pointer;
+	border-radius: 25%;
+}
+
+
+#sensor_pedimentos {
+	display: block;
+	position: absolute;
+	background-color:transparent;
+	top: 111px;
+	left: 658px;
+	width: 106px;
+	height: 138px;
+	cursor: pointer;
+	border-radius: 25%;
+}	
+
+#sensor_importacion {
+	display: block;
+	position: absolute;
+	background-color:transparent;
+	top: 304px;
+	left: 572px;
+	width: 133px;
+	height: 81px;
+	cursor: pointer;
+	border-radius: 25%;
+}
+
+#sensor_agentes {
+	display: block;
+	position: absolute;
+	background-color:transparent;
+	top: 191px;
+	left: 426px;
+	width: 82px;
+	height: 138px;
+	cursor: pointer;
+	border-radius: 25%;
+}
+
+
+.box_blurs{
+	position: absolute; 
+	z-index: 2; 
+	background-color: transparent; 
+	top: 22%;
+	display: none;
+}
+
+/*New CSS*/
+.cont-body{
+	min-height: 100%;
+}
+
+.cont-info-index{
+	border: 2px #2f939d solid; 
+	border-radius: 10px;
+}
+
+.row-cont-info{
+	padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.txt-ctrl-volume{
+	color: #2f939d;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.main-range{
+	overflow: hidden;
+}
+
+.margen-box-info{
+	margin-top: 17px
+}
+
+.main-box-info{
+	border-right: 1px solid #2f939d;
+	height: 215px;
+}
+
+.main-notes{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.title-box-info{
+	background-color: #2f939d; 
+	border-radius: 14px; 
+	font-size: 18px; 
+	color: #fff;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-weight: bold;
+	overflow: hidden;
+}
+
+.title-box-data{
+	font-size: 15px;
+	font-weight: bold;
+	color: #2f939d;
+	padding: 10px 0 0 0;
+}
+
+.data-numeric{
+	font-size: 16px;
+	color: #5e595c;
+	padding: 10px 0 0 0;
+}
+
+/*Slider CSS*/
+.margen-slider{
+	margin-top: 20px;
+}
+
+.carousel-content {
+    color:black;
+    display:flex;
+    align-items:center;
+}
+
+.carousel-control{
+	top: 50% !important;
+	width: 10% !important;
+	display: inline-block !important;
+}
+
+.carousel-control.left{
+	background-image: none !important;
+}
+
+.carousel-control.right{
+	background-image: none !important;
+}
+
+/*Footer*/
+.main-icos-footer{
+	overflow: hidden;
+}
+.box-icos-footer{
+	top: 40px;
+}
+
+.banner-footer{
+	background-image: url('../img/pleca_inferior.png');
+	background-size: contain;
+	background-repeat: repeat-x;
+	height: 10px;
+}
+
+.txt-face, .txt-twitter{
+	font-size: 12px;
+	color: #00bfd6;
+	padding-top: 3px;
+}
+
+.cont-ico-footer{
+	width: auto;
+}
+
+/*iPhone*/
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) {
+	.box_nom_emp{
+		padding: 0px;
+		margin: 0px;
+		font-size: 13px;	
+	}
+	
+	#sensor_iva{
+		left: 67%;
+    	width: 25%;
+    	height: 46%;
+	}
+
+	#sensor_isr{
+		top: 8%;
+    	left: 21%;
+    	width: 42%;
+    	height: 27%;
+	}
+
+	#sensor_ieps{
+		left: 43%;
+    	width: 38%;
+	}
+
+	#sensor_isan{
+		left: 4%;
+    	width: 35%;
+	}
+
+	#sensor_ietu {
+		left: 7%;
+    	width: 22%;
+	}
+
+	.box_blurs{
+		top: 30%;
+	}
+
+	.ico-search{
+	    font-size: 14px;
+	    padding: 5px 0 0 0;
+	}
+
+	.box-icos-footer{
+		top: 0px;
+	}
+
+	.title-subcompanie{
+		margin: 0 50px;
+	}
+
+	.main-box-info{
+		border-right: none;
+		height: auto;
+		overflow: hidden;
+	}
+
+	.main-notes{
+		overflow: hidden;
+	}
+
+	.main-notes > div{
+		overflow: hidden;
+	}
+
+}
+
+/*iPad*/
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  {
+	.box_blurs{
+		top: 36%;
+	}
+
+	.box-icos-footer{
+		top: 0px;
+	}
+}
