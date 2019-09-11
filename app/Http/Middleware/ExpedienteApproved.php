@@ -37,8 +37,9 @@ class ExpedienteApproved
         $expedienteId = explode('/',$request->path())[1];
 
 
-
         $expediente = $this->expedienteRepo->getExpedienteById($expedienteId);
+
+
 
 
 

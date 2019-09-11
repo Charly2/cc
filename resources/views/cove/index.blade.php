@@ -29,29 +29,18 @@
                             </thead>
                             <tbody> 
                                 @foreach ($coves as $row)
-                                @php
-                                  $collection = collect(json_decode($row->json_cove,true));
-                                  $collection = new App\Collector\Collector($collection);
-                                  $mercancias = $collection->comprobantes['mercancias'];
-                                  $total= $collection->comprobantes->sum('valorTotal');
-                                  $cove_json=json_decode($row->json_cove,true);
-                                    foreach ($mercancias as $mercancia){
-                                        if (is_array($mercancia)){
-                                            $total += $mercancia['valorTotal'];
-                                    }
-                                  }
-
-                                @endphp
                                   <tr>
                                     <td>{{$row->usr_num_cove}}</td>
-                                    <td>{{$cove_json['comprobantes']['fechaExpedicion']}}</td>
-                                    <td>${{ number_format($total,2) }}</td>
+                                    <td>{{ $row->getFechaExp() }}</td>
+                                    <td>${{$row->getTotalMercancias()}}</td>
                                     <td>{{ isset($row->id_expediente) ? $row->id_expediente : 'N/A' }}</td>
-                                    <td>{{$cove_json['comprobantes']['emisor']['nombre']}}</td>
+                                    <td>{{$row->getEmisor()}}</td>
                                   </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
+
                     </div>
                     </div>
                     </div>

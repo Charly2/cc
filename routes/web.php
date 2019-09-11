@@ -14,7 +14,11 @@
 use App\Documento;
 use App\FacturasCargadas;
 use App\User;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use App\CatUsertype;
+use MrGenis\Library\XmlToArray;
+use Symfony\Component\VarDumper\VarDumper;
 
 Route::get('/', function () {
     return Redirect::to('home');
@@ -213,7 +217,7 @@ Route::group(['middleware' => ['auth', 'chk_agencia', 'session_timeout']], funct
      *
      * get      /movimientos/{id}/registrar/pago        Modal para registrar un pago
      * get      /movimientos/{id}/registrar/anticipo    Modal para registrar un anticipo
-     * post     /movimientos                            Método para registrar un pago
+     * post     /movimientos                            Método para registrar un pagomovimientos
      * get      /movimientos/download/{id}              ?
      * get      /vista_pago/{id}/{id_expediente}        Vista que muestra el pago a detalle
      */
@@ -221,6 +225,7 @@ Route::group(['middleware' => ['auth', 'chk_agencia', 'session_timeout']], funct
         Route::get('{id}/registra/pago', ['as' => 'movimientos.pago.register', 'uses' => 'MovimientosController@getFormPago']);
         Route::get('{id}/registra/anticipo', ['as' => 'movimientos.anticipo.register', 'uses' => 'MovimientosController@getFormAnticipo']);
         Route::post('/', ['as' => 'movimientos.store', 'uses' => 'MovimientosController@store']);
+        Route::post('/store_anticipo', ['as' => 'movimientos.store', 'uses' => 'MovimientosController@store_anticipo']);
         Route::get('download/{id}', ['as' => 'pago.download', 'uses' =>'MovimientosController@download']);
     });
     Route::get('/vista_pago/{id}/{id_expediente}', 'MovimientosController@indexPago');
@@ -330,12 +335,61 @@ Route::post('prueba_get_files','PruebaController@index_get_files');
 
 
 Route::get('/dep',function (){
-    $resp = "{result: true, mensaje: null, interno: 26267, poliza:87, tipo: PE}";
-    $string = str_replace('{','{"',$resp);
-    $string = str_replace('}','"}',$string);
-    $string = str_replace(':','":"',$string);
-    $string = str_replace(', ','","',$string);
-    $datos   = json_decode($string);
-
-    var_dump($datos);
+    return view('prueba.index');
 });
+
+
+
+Route::post('/dep_file',function (){
+
+    $file = request()->file('file');
+    $url = storage_path('app/test/');
+    $status = $file->move($url,$file->getClientOriginalName());
+    $importFile = File::get($url.$file->getClientOriginalName());
+    $array_cove = XmlToArray::convert($importFile);
+
+    VarDumper::dump($array_cove);
+
+    if ($array_cove['_root']['namespaceURI']['xmlns:oxml']=="http://www.ventanillaunica.gob.mx/cove/ws/oxml/"){
+        VarDumper::dump("NameURI OK");
+    }else{
+        VarDumper::dump("NameURI ERROR");
+    }
+
+
+    //VarDumper::dump($array_cove['comprobantes']);
+    //dd($array_cove);
+
+
+
+
+
+    //dd(request()->file('file'));
+});
+
+
+use App\Library\XMLVAL\XmlValidator;
+
+Route::get('/pp',function (){
+
+    foreach (['CSM9301219B4/13/coves/_XMLCOVE182FWAXS2.XML','test/no.xml'] as $item){
+        $validator = new XmlValidator;
+        $validated = $validator->validateFeeds($item);
+
+        if ($validated) {
+            echo $item."----"."SI <br>";
+        } else {
+            echo $item."----"."NO <br>";
+        }
+    }
+
+
+
+
+
+
+
+    dd("s");
+
+});
+

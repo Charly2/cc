@@ -1,0 +1,95 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.ventanillaunica.gob.mx/cove/ws/oxml/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="solicitarRecibirCoveServicio">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="comprobantes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="tipoOperacion"/>
+                            <xs:element type="xs:short" name="patenteAduanal"/>
+                            <xs:element type="xs:date" name="fechaExpedicion"/>
+                            <xs:element type="xs:string" name="observaciones"/>
+                            <xs:element type="xs:string" name="rfcConsulta"/>
+                            <xs:element type="xs:byte" name="tipoFigura"/>
+                            <xs:element type="xs:string" name="correoElectronico"/>
+                            <xs:element name="firmaElectronica">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="certificado"/>
+                                        <xs:element type="xs:string" name="cadenaOriginal"/>
+                                        <xs:element type="xs:string" name="firma"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element type="xs:string" name="numeroFacturaOriginal"/>
+                            <xs:element name="factura">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:byte" name="certificadoOrigen"/>
+                                        <xs:element type="xs:byte" name="subdivision"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="emisor">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:byte" name="tipoIdentificador"/>
+                                        <xs:element type="xs:string" name="identificacion"/>
+                                        <xs:element type="xs:string" name="nombre"/>
+                                        <xs:element name="domicilio">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element type="xs:string" name="calle"/>
+                                                    <xs:element type="xs:byte" name="numeroExterior"/>
+                                                    <xs:element type="xs:string" name="numeroInterior"/>
+                                                    <xs:element type="xs:string" name="municipio"/>
+                                                    <xs:element type="xs:string" name="pais"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="destinatario">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:byte" name="tipoIdentificador"/>
+                                        <xs:element type="xs:string" name="identificacion"/>
+                                        <xs:element type="xs:string" name="nombre"/>
+                                        <xs:element name="domicilio">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element type="xs:string" name="calle"/>
+                                                    <xs:element type="xs:string" name="numeroExterior"/>
+                                                    <xs:element type="xs:string" name="numeroInterior"/>
+                                                    <xs:element type="xs:string" name="colonia"/>
+                                                    <xs:element type="xs:string" name="municipio"/>
+                                                    <xs:element type="xs:string" name="entidadFederativa"/>
+                                                    <xs:element type="xs:string" name="pais"/>
+                                                    <xs:element type="xs:int" name="codigoPostal"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="mercancias" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element type="xs:string" name="descripcionGenerica"/>
+                                        <xs:element type="xs:string" name="tipoMoneda"/>
+                                        <xs:element type="xs:string" name="claveUnidadMedida"/>
+                                        <xs:element type="xs:float" name="cantidad"/>
+                                        <xs:element type="xs:float" name="valorUnitario"/>
+                                        <xs:element type="xs:float" name="valorTotal"/>
+                                        <xs:element type="xs:float" name="valorDolares"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

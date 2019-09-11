@@ -24,7 +24,7 @@ use File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Session;
-use View;
+
 
 class ExpedienteController extends Controller
 {
@@ -73,7 +73,7 @@ class ExpedienteController extends Controller
             Session::get('id')
         )->get();
 
-        return View::make('expediente.index',[
+        return view('expediente.index',[
             'expedientes' => $expedientes
         ]);
     }
@@ -86,7 +86,7 @@ class ExpedienteController extends Controller
         $aduanas = $this->aduana->getAll();
         $agencias = Agencia::all();
 
-        return View::make('expediente.create',[
+        return view('expediente.create',[
             'aduanas' => $aduanas,'agencias'=>$agencias
         ]);
     }
@@ -109,10 +109,12 @@ class ExpedienteController extends Controller
 
         $folderEmpresa = ConfigEmpresa::where('empresa_id',session()->get('id'))->where('configuracion','folder_storage')->first();
 
-
         $expediente    = Expediente::create($data);
-        $id = $expediente['id'];
-        $path          = storage_path()."/app/$folderEmpresa->value/$id/";
+
+        $id = $expediente->id;
+
+        $path          = storage_path()."/app/".$folderEmpresa->value."/$id/";
+
         File::makeDirectory($path, $mode = 0777, true, true);
         if(!File::exists($path)){
             // No se creo el folder correctamente
@@ -159,7 +161,7 @@ class ExpedienteController extends Controller
         }
         /*Storage::setVisibility('app/GRU9712028T1_luigi/29/facturas_xml/GRU9712028T1L01767542.xml', 'public');*/
         /*Storage::getVisibility(storage_path('app/GRU9712028T1_luigi/29/facturas_xml/GRU9712028T1L01767542.XML'));*/
-        return View::make('expediente.expediente',['pedimentos_asignados'=> $pedimentos_asignados,'coves'=>$coves, 'arr_cove' => $arregloCoves,
+        return view('expediente.expediente',['pedimentos_asignados'=> $pedimentos_asignados,'coves'=>$coves, 'arr_cove' => $arregloCoves,
             'expediente' => $expediente, 'pagos' => $pagos, 'pedimentos' => $pedimentos, 'anticipos' => $anticipos ,'pagos_External'=> $pagos_External,
             'documentos' => $documentos , 'folderEmpresa'=>$folderEmpresa
         ]);
@@ -196,7 +198,7 @@ class ExpedienteController extends Controller
             }
         }
 
-        return View::make('expediente.edit',[
+        return view('expediente.edit',[
             'expediente' => $expediente,
             'agencias'   => $agencias,
             'agente'     => $agente
@@ -251,10 +253,16 @@ class ExpedienteController extends Controller
         ->where('empresa_id',Session::get('id'))
         ->whereNull('expediente_id')
         ->paginate(50);
-        return View::make('pedimento.unsigned',[
-            'pedimentos' => $pedimentos, 
+
+
+
+
+
+        return view('pedimento.unsigned',[
+            'pedimentos' => $pedimentos,
             'id_expediente' => $id
-        ])->render();
+        ]);
+
     }
 
     /**
@@ -446,16 +454,16 @@ class ExpedienteController extends Controller
         }
 
         if ($tipo_estado == 'general') {
-            return View::make('expediente.estado_cta',[
-                 'id_expediente' => $id,
-                 'facturas'      => $registros,
-                 'pedimentos'    => $pedimentos,
-                 // 'pagos'      => $pagos,
-                 'total'         => $total,
-                 'message'       => $result
+            return view('expediente.estado_cta',[
+                'id_expediente' => $id,
+                'facturas'      => $registros,
+                'pedimentos'    => $pedimentos,
+                // 'pagos'      => $pagos,
+                'total'         => $total,
+                'message'       => $result
             ]);
         } elseif($tipo_estado == 'agente') {
-            return View::make('expediente.estado_cta_agente',[
+            return view('expediente.estado_cta_agente',[
                 'id_expediente' => $id,
                 'facturas'      => $registros,
                 'factura'       => $facturas,
@@ -467,7 +475,7 @@ class ExpedienteController extends Controller
                 'agenterfc'     => $facturas['Emisor']['Rfc']
             ]);
         } elseif($tipo_estado == 'impuestos') {
-            return View::make('expediente.estado_cta_impuestos',[
+            return view('expediente.estado_cta_impuestos',[
                 'id_expediente' => $id,
                 'facturas'      => $registros,
                 'pedimentos'    => $pedimentos,

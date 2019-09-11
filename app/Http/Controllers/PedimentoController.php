@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Input;
+use phpDocumentor\Reflection\DocBlock\Description;
 use Session;
 use View;
 
@@ -82,7 +83,7 @@ class PedimentoController extends Controller
     {
         $pedimentos = null;
 
-        return View::make('pedimento.pedimentos', [
+        return view('pedimento.pedimentos', [
             'pedimentos' => $pedimentos
         ]);
     }
@@ -122,7 +123,7 @@ class PedimentoController extends Controller
         $totalSi    = $this->pedimentoExternal->totalPedimentosEncontrados(Session::all());
         $totalNo    = $this->pedimentoExternal->totalPedimentosNoEncontrados(Session::all());
 
-        return View::make('pedimento.facreview', [
+        return view('pedimento.facreview', [
             'pedimentos' => $pedimentos,
             'title' => 'Pedimentos encontrados FacReview Vs Customs & Trade',
             'totales' => (object) [
@@ -143,7 +144,7 @@ class PedimentoController extends Controller
         $totalSi = $this->pedimentoExternal->totalPedimentosEncontrados(Session::all());
         $totalNo = $this->pedimentoExternal->totalPedimentosNoEncontrados(Session::all());
 
-        return View::make('pedimento.facreview', [
+        return view('pedimento.facreview', [
             'pedimentos' => $pedimentos,
             'title' => 'Pedimentos no encontrados FacReview Vs Customs & Trade',
             'totales' => (object) [
@@ -180,46 +181,53 @@ class PedimentoController extends Controller
 
     public function asigna_pedimentos($id_pedimento,$id_expediente)
     {
-        //Muevo el archivo de Posición
-        /*
-        $folderEmpresa = ConfigEmpresa::where('empresa_id',session()->get('id'))
-                        ->where('configuracion','folder_storage')
-                        ->first();
-
-        File::move("storage/$folderEmpresa->value/$coves->xml",  "storage/$folderEmpresa->value/$id_expediente/$coves->xml");
-        */
-
-
         $asignarPedim = new PedimentosAsignado;
         $asignarPedim->id_expediente = $id_expediente;
         $asignarPedim->id_pedimento  = $id_pedimento;
 
+
+
         $pedimento = $this->pedimento->PedimReturnJson($id_pedimento);
 
-        foreach ($pedimento["datos_pedimento"] as $key => $value) {
-           $validate = collect($pedimento["datos_pedimento"])->values()->contains('num_pedimento');
-           if($validate){
+        //dd($pedimento);
 
+        /*foreach ($pedimento["datos_pedimento"] as $key => $value) {
+            var_dump($value);
 
-               vardump($value);
-
-           }
-        }
+        }*/
 
 
         $id_aduana = $pedimento["datos_pedimento"][0]["id_aduana"];
+
 
         if ($asignarPedim->save()) {
 
             $updatePedimento = $this->pedimento->asignarPedimento($id_pedimento,$id_expediente,$id_aduana);
 
+
             $pedimento = $this->pedimento->getPedimentoEmpresa($id_pedimento);
 
-            Storage::move($pedimento->rfc.'/'.$pedimento->archivoM, $pedimento->rfc.'/'.$pedimento->expediente_id.'/'.$pedimento->archivoM);
-            $path = storage_path('app/'.$pedimento->rfc.'/'.$pedimento->archivoM.'.pdf');
-            if(file_exists($path)){
-                Storage::move($pedimento->rfc.'/'.$pedimento->archivoM.'.pdf', $pedimento->rfc.'/'.$pedimento->expediente_id.'/'.$pedimento->archivoM.'.pdf');
+            if (!Storage::exists($pedimento->rfc.'/'.$pedimento->expediente_id.'/pedimentos/')){
+                Storage::makeDirectory($pedimento->rfc.'/'.$pedimento->expediente_id.'/pedimentos/',0777,true);
             }
+
+
+            Storage::move($pedimento->rfc.'/pedimentos/'.$pedimento->archivoM,$pedimento->rfc.'/'.$pedimento->expediente_id.'/pedimentos/'.$pedimento->archivoM);
+            //dd($pedimento->rfc.'/'.$pedimento->expediente_id.'/pedimentos/');
+
+/*
+            $files  = Storage::allFiles($pedimento->rfc);
+            dd($files);*/
+
+            //dd($path);
+
+            if(Storage::exists($pedimento->rfc.'/pedimentos/'.$pedimento->archivoPDF)){
+                Storage::move($pedimento->rfc.'/pedimentos/'.$pedimento->archivoPDF, $pedimento->rfc.'/'.$pedimento->expediente_id.'/pedimentos/'.$pedimento->archivoPDF);
+
+            }
+
+
+
 
             //Storage::move($expediente->
 

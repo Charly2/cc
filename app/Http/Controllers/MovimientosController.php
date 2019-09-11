@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Aduana;
 use App\Agencia;
 use App\CatalogoTipoPago;
 use App\Expediente;
@@ -47,8 +48,63 @@ class MovimientosController extends Controller
         ]);
     }
 
+    public function store_anticipo(Request $request){
+
+        switch ($request->forma_pago) {
+            case '1':
+                $formaDePago = "EFECTIVO";
+                break;
+            case '2':
+                $formaDePago = "CHEQUE";
+                break;
+            case '3':
+                $formaDePago = "TRANSFERENCIA";
+                break;
+            default:
+                $formaDePago = "OTRO";
+                break;
+        }
+
+        $mov = new Movimiento;
+        $mov->tipo = 'Anticipo';
+        $mov->idTipo = 2;
+
+        $interno = '';
+        $poliza  = '';
+        $tipo    = '';
+
+        $agente = Agencia::where('nombre',$request->agente_aduanal)->get()->first();
+
+
+
+        $cantidad = str_ireplace("$","", $request->monto);
+        $cantidad = str_ireplace(",","", $cantidad);
+        $mov->monto_factura     = 0;
+        $mov->monto_pagado      = $cantidad;
+        $mov->monto_anterior    = $cantidad;
+        $mov->polizaContable    = $tipo.' '.$poliza;
+        $mov->rfc               = $request->rfc;
+        $mov->idExpediente      = $request->id;
+        $mov->fechaPago         = date("Y-m-d\TH:i:s", strtotime(date('Y-m-d H:i:s')));
+        $mov->uidPago           = $formaDePago;
+        $mov->id_agencia        = $agente->id;
+        $mov->id_empresa        = Session::get('id');
+        $mov->id_facturacargada = null;
+
+
+        if (!$mov->save()){
+            abort(403,"No se guardo correctamente");
+        }
+
+        return redirect('/expedientes/'.$request->id);
+
+
+    }
+
     public function store(Request $request)
     {
+
+
 
         switch ($request->forma_pago) {
             case '1':
@@ -103,6 +159,8 @@ class MovimientosController extends Controller
             $interno = '';
             $poliza  = '';
             $tipo    = '';
+
+
         }
 
 
@@ -112,7 +170,7 @@ class MovimientosController extends Controller
         $factura  = FacturasCargadas::where('id', $request->id_factura)->get();
 
 
-        dd($factura);
+
 
        
         $cantidad = str_ireplace("$","", $request->monto); 

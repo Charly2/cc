@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use League\Flysystem\FileNotFoundException;
 use MrGenis\Library\XmlToArray;
 use Session;
 
@@ -26,10 +27,26 @@ class CovesController extends Controller
         $this->coves = $cove;
     }
 
+
+
     public function index($id_empresa)
     {
         $coves=Cove::where('id_empresa','=',Session::get('id'))->get();
-            return view('cove.index',['coves'=> $coves]);
+        $cover = Cove::where('id_empresa',Session::get('id'))->get();
+
+        //$cover = Cove::find(4);
+        //dd($this::getTotalMercancias(json_decode($cover->json_cove)));
+
+
+
+
+
+
+
+        //dd($cover);
+
+
+        return view('cove.index',['coves'=> $cover]);
     }
 
 
@@ -102,7 +119,7 @@ class CovesController extends Controller
      * @param $id_expediente
      * @return array|bool
      */
-    public function save_file($request, $file, $name_cove, $id_expediente){
+    public function  save_file($request, $file, $name_cove, $id_expediente){
         // Obtiene el tipo de contenido del archivo
         $mime       = $file->getClientMimeType();
 
@@ -153,15 +170,17 @@ class CovesController extends Controller
         $cove = new Cove();
 
 
-        $exp = Expediente::where('aduana_id',$id_expediente)->get();
-        dd( $exp);
-        $cove->id_agente    = Session::get('id_agencia');
+        $exp = Expediente::where('aduana_id',$id_expediente)->get()->first();
+
+        $cove->id_agente    = $exp->agente_aduanal;
         $cove->id_usuario   = Session::get('id_usuario');
         $cove->id_empresa   = Session::get('id');
 
         if ($id_expediente) {
             $cove->id_expediente = $id_expediente;
-        } 
+        }
+
+        //dd($datos_cove);
 
         $cove->usr_num_cove = $name_cove;
         $cove->xml          = $datos_cove['xml'];
@@ -188,34 +207,51 @@ class CovesController extends Controller
 
 
     public function asigna_cove($id_cove, $id_expediente){
-        // $id = Agente Aduanal
-        $id = Expediente::where('id',$id_expediente)->select('agente_aduanal')->first();
- 
-        $coves = Cove::where('id','=',$id_cove)->first();
+        $agente_aduanal = Expediente::find($id_expediente)->get()->first()->agente_aduanal;
+        $coves = Cove::where('id',$id_cove)->get()->first();
+
+        /*dd($coves);
+        dd($id_cove);*/
+
         if ($coves) {
-            Cove::where('id', $id_cove)
-            ->update(['id_expediente'=> $id_expediente,'id_agente'=>$id->agente_aduanal]);
+            $coves->id_expediente = $id_expediente;
+            $coves->id_agente = $agente_aduanal;
+            $coves->save();
 
             //Muevo el archivo de Posición
-            $folderEmpresa = ConfigEmpresa::where('empresa_id',session()->get('id'))
+            /*$folderEmpresa = ConfigEmpresa::where('empresa_id',session()->get('id'))
                             ->where('configuracion','folder_storage')
-                            ->first();
+                            ->first();*/
 
-            //File::move("storage/$folderEmpresa->value/$coves->xml",  "storage/$folderEmpresa->value/$id_expediente/$coves->xml");
-            // Mueve el archivo de carpeta en Storage/{Empresa}/{id_expediente}/
-            Storage::move($folderEmpresa->value.'/'.$coves->xml, $folderEmpresa->value.'/'.$id_expediente.'/'.$coves->xml);
-            $archivos = explode('.',$coves->xml);
-            $ruta = storage_path('app/'.$folderEmpresa->value.'/'.$archivos[0].'.pdf');
-            if(file_exists($ruta)){
-                Storage::move($folderEmpresa->value.'/'.$archivos[0].'.pdf', $folderEmpresa->value.'/'.$id_expediente.'/'.$archivos[0].'.pdf');
+            $folderEmpresa = ConfigEmpresa::where('empresa_id',session()->get('id'))->get()->first();
+
+            $path = storage_path("app/".$folderEmpresa->value.'/'.$id_expediente.'/coves');
+
+            if(!Storage::exists($folderEmpresa->value.'/'.$id_expediente.'/coves')){
+                Storage::makeDirectory($folderEmpresa->value.'/'.$id_expediente.'/coves');
             }
-            return redirect()->route('expediente.show', array('id' => $id_expediente));
+
+
+                /*if (Storage::exists($folderEmpresa->value . '/' . $id_expediente . '/coves/' . $coves->xml)){
+                    Storage::delete($folderEmpresa->value . '/' . $id_expediente . '/coves/' . $coves->xml);
+                }*/
+                $move = Storage::move($folderEmpresa->value . '/coves/' . $coves->xml, $folderEmpresa->value . '/' . $id_expediente . '/coves/' . $coves->xml);
+                $archivos = explode('.',$coves->xml);
+
+                $pdf = Storage::move($folderEmpresa->value.'/coves/'.$archivos[0].'.pdf',$folderEmpresa->value . '/' . $id_expediente . '/coves/' . $archivos[0].'.pdf');
+                //dd([$move, $pdf]);
+
+
+
+            return redirect('expedientes/'.$id_expediente);
+
+            //return redirect()->route('expediente.show', array('id' => $id_expediente));
         
         } else {
            echo "error";
         }
 
-        $coves = Cove::where('id_expediente','=0')->get();
+
     }
 
     public function parseo_cove(){
@@ -285,6 +321,7 @@ class CovesController extends Controller
              'cve_pedimento'  =>$fila[5],
              'rfc_importador' =>$fila[8],
              'tipo_cambio'    =>$fila[10],
+             'peso_bruto'     =>$fila[16],
              'peso_bruto'     =>$fila[16],
              'salida'         =>$fila[17],
              'entrada'        =>$fila[18],

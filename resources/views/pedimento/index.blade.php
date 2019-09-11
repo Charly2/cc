@@ -6,7 +6,7 @@
         <div class="panel-heading">Lista general de Pedimentos<a class="btn btn-default btn-xs pull-right" href="{{ url('/expediente/listado') }}" role="button"><span class="glyphicon glyphicon-arrow-left"></span> Atras</a></div>
         <div class="panel-body">
             @if(Session::has('message'))
-                <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <div class="alert alert-info alert-dismissible fade in" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button> <strong>{{ Session::get('message') }}</strong>
@@ -19,7 +19,7 @@
                     <a role="button" class="btn btn-primary pull-right"  href="{{url('cargar_pedimento',['id_empresa'=> Session::get('id')])}}" ><span class="glyphicon glyphicon-plus"></span> Cargar Pedimento</a>
                 </div>
                 <div class="col-md-12">
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="width: 100%">
                         <table id="myTable" class="table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0">
                             <thead>
                                 <tr>
@@ -40,7 +40,7 @@
                                             <td>{{$pedimento->pedimento}}</td>
                                             <td>{{$pedimento->aduanaDespacho}}</td>
                                             <td>{{$pedimento->impExpNombre}}</td>
-                                            <td>{{$pedimento->expediente_id}}</td>
+                                            <td>{{$pedimento->expediente_id?$pedimento->expediente_id:"S/A"}}</td>
                                             <td>{{$pedimento->tipoOperacion = 1 ? 'Importacion' : 'Exportación'}}</td>
                                         </tr>
                                     @endforeach

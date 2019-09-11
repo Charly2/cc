@@ -22,7 +22,7 @@ class CheckAgencia
      */
     public function handle($request, Closure $next)
     {
-     
+
         //valido que exista en la sesion el id_agencia
         if ($request->session()->has('id_usuario')) {
             return $next($request);

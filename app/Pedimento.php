@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Pedimento extends Model
 {
@@ -38,6 +39,10 @@ class Pedimento extends Model
     public function aduana()
     {
         return $this->hasOne('App\Aduana', 'compuesto', 'aduanaDespacho');
+    }
+
+    public function getAduana(){
+        return Agencia::where('id',470)->get()->first();
     }
 
     /**

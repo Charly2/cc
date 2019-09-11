@@ -16,7 +16,8 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.8",
         "mashape/unirest-php": "^3.0",
-        "mrgenis/xml-to-array-schema":"^1.0"
+        "mrgenis/xml-to-array-schema":"^1.0",
+        "laravelcollective/remote": "^5.2.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -26,7 +27,9 @@
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^7.5",
         "mashape/unirest-php": "3.*",
-        "mrgenis/xml-to-array-schema":"^1.0"
+        "mrgenis/xml-to-array-schema":"^1.0",
+        "laravelcollective/html": "5.2.*",
+        "laravelcollective/remote": "^5.2.0"
     },
     "config": {
         "optimize-autoloader": true,

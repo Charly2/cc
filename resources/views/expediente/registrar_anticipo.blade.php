@@ -1,7 +1,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form class="form" method="POST" action="{{ route('expediente.anticipo.register.r') }}">
+            <form class="form" method="POST" action="{{ url('/store_anticipo') }}">
              {!! csrf_field() !!}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -53,11 +53,11 @@ class EloquentExpedienteRepository
     public function getExpedienteById( $id)
     {
 
-        return DB::select("select e.* , a.nombre as nombre_agente from expedientes e left join agencias a on e.agente_aduanal=a.id where e.id = 5")[0];
+        //return DB::select("select e.* , a.nombre as nombre_agente from expedientes e left join agencias a on e.agente_aduanal=a.id where e.id = 5")[0];
 
-        /*return Expediente::where('expedientes.id',$id)
-        ->leftJoin('agencias', 'expedientes.agente_aduanal', ' =', 'agencias.id')
-        ->select('expedientes.*','agencias.nombre as nombre_agente')->first();*/
+        return Expediente::where('expedientes.id',$id)
+        ->leftJoin('agencias', 'expedientes.agente_aduanal', 'agencias.id')
+        ->select('expedientes.*','agencias.nombre as nombre_agente')->first();
     }
 
     /**

@@ -9,42 +9,39 @@
             <div class="page-header">
                 <div class="clearfix"></div>
             </div>
-            <div class="table-responsive">
-                <table id="table-pedimentos" class="table table-striped txt-small">
+
+            <div class="table-responsive" style="width: 100%">
+                <table id="myTable" class="table table-striped table-bordered table-hover dataTable no-footer" cellspacing="0">
                     <thead>
                     <tr>
                         <td>Pedimento</td>
                         <td>Aduana despacho</td>
                         <td>Nombre Archivo M</td>
-                 
+
                         <td>Imp / Exp Nombre</td>
                         <td>Tipo operacion</td>
                         <td>Acción</td>
                     </tr>
                     </thead>
-                    <tbody id="pedimentos-loader">
+                    <tbody>
+
                     @foreach($pedimentos as $pedimento)
-              
                         <tr>
-                            <td>{{ $pedimento->pedimento }}</td>
-                            <td>{{ $pedimento->aduana->denominacion }}</td>
-                            <td>{{ $pedimento->archivoM }}</td>
-                
+                            <td>{{$pedimento->pedimento}}</td>
+                            <td>{{$pedimento->getAduana()->nombre}}</td>
+                            <td>{{$pedimento->archivoM}}</td>
                             <td>{{ $pedimento->impExpNombre }}</td>
                             <td>{{ ($pedimento->tipoOperacion==1) ? 'Importacion' : 'Exportacion' }}</td>
-                            <td> 
-<!--
-                                <a class="btn btn-default btn-xs pull-left" href="{{ url('/pedimento_vista',['id' => $pedimento->id,'expediente_id' => $id_expediente ]) }}" role="button" aria-label="Left Align" title="Ver pedimento completo" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-     -->                
+                            <td>
                                 <a class="btn btn-default btn-xs pull-left" href="{{url('/asigna_pedimentos',['id_pedimento'=>$pedimento->id,'id_expediente' => $id_expediente])}}" role="button" aria-label="Left Align" title="Asignar Pedimento" ><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span></a>
-
                             </td>
                         </tr>
                     @endforeach
+
                     </tbody>
                 </table>
-                {!! $pedimentos->render() !!}
             </div>
+
         </div>
 
 

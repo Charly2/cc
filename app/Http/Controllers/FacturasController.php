@@ -276,7 +276,7 @@ class FacturasController extends Controller
         $data_resp         = $respuesta->body;
         //$data_resp    = json_decode($resp);
 
-
+        //dd($data_resp->{"Numero de factura"});
 
         if ($codeResponse==200 && $data_resp->result === true) {
             $interno = $data_resp->interno;
@@ -286,8 +286,8 @@ class FacturasController extends Controller
             $interno = $data_resp->interno;
             $poliza  = $data_resp->result;
             $tipo    = $data_resp->result;
-            echo  'La factura '.$fileName.' '.$data_resp->mensaje;
-            exit();
+            //echo  'La factura '.$fileName.' '.$data_resp->mensaje;
+            //exit();
         }elseif($codeResponse===200 && $data_resp->result === 10 || $data_resp->result === 9 )  {
             $interno = '';
             $poliza  = '';
